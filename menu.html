@@ -3,306 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Menu</title>
+    <title>FBC Menu</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="default.css" rel="stylesheet" type="text/css">
     <style>
-        :root {
-            --primary: #1a1a1a;
-            --secondary: #c9a961;
-            --accent: #8b7355;
-            --bg: #faf8f3;
-            --text: #2d2d2d;
-            --card-bg: #ffffff;
-            --shadow: rgba(0, 0, 0, 0.08);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Cormorant Garamond', serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            min-height: 100vh;
-            background-image: 
-                radial-gradient(circle at 20% 20%, rgba(201, 169, 97, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(139, 115, 85, 0.03) 0%, transparent 50%);
+            background-image: url(FBC_Logo_Buffalo.png); /* Link to your image */
+            background-repeat: no-repeat;           /* Prevents the image from tiling */
+            background-size: cover;                 /* Stretches image to fill the screen */
+            background-attachment: fixed;           /* Keeps background still while scrolling */
+            background-position: bottom;             /* Centers the image */
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 60px;
-            padding-bottom: 30px;
-            border-bottom: 2px solid var(--secondary);
-            animation: fadeInDown 0.8s ease-out;
-        }
-
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 4rem;
-            font-weight: 900;
-            color: var(--primary);
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-
-        .tagline {
-            font-size: 1.2rem;
-            color: var(--accent);
-            font-weight: 300;
-            font-style: italic;
-        }
-
-        .main-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 50px;
-            flex-wrap: wrap;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-        }
-
-        .main-tab {
-            background: var(--card-bg);
-            border: 2px solid var(--secondary);
-            padding: 18px 40px;
-            font-size: 1.3rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .main-tab::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(201, 169, 97, 0.2), transparent);
-            transition: left 0.6s;
-        }
-
-        .main-tab:hover::before {
-            left: 100%;
-        }
-
-        .main-tab:hover {
-            background: var(--secondary);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px var(--shadow);
-        }
-
-        .main-tab.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .main-content {
-            display: none;
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        .main-content.active {
-            display: block;
-        }
-
-        .sub-tabs {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .sub-tab {
-            background: var(--card-bg);
-            border: 1px solid var(--accent);
-            padding: 12px 28px;
-            font-size: 1.1rem;
-            font-weight: 400;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 0.5px;
-        }
-
-        .sub-tab:hover {
-            background: var(--accent);
-            color: white;
-            transform: scale(1.05);
-        }
-
-        .sub-tab.active {
-            background: var(--secondary);
-            color: white;
-            border-color: var(--secondary);
-        }
-
-        .menu-items {
-            display: none;
-            animation: slideInUp 0.5s ease-out;
-        }
-
-        .menu-items.active {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .menu-item {
-            background: var(--card-bg);
-            padding: 30px;
-            border-left: 4px solid var(--secondary);
-            box-shadow: 0 4px 15px var(--shadow);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .menu-item::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: var(--secondary);
-            transition: width 0.4s ease;
-        }
-
-        .menu-item:hover {
-            transform: translateX(8px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-        }
-
-        .menu-item:hover::after {
-            width: 100%;
-        }
-      /* Remove After Update*/
-        .menu-item-beer-description {
-            display: flex; /* Makes the children sit side by side */
-            justify-content: space-between; /* Optional: adds space between the divs */
-            gap: 20px; /* Optional: provides a consistent gap between elements */
-        }
-        .menu-item-title-price {
-            display: flex; /* Makes the children sit side by side */
-            justify-content: space-between; /* Optional: adds space between the divs */
-            gap: 20px; /* Optional: provides a consistent gap between elements */
-        }
-
-        .item-name {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
-        .item-description-beer {
-            font-size: 1rem;
-            color: var(--accent);
-            margin: 8px 0;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        .item-price {
-            font-size: 1.3rem;
-            color: var(--secondary);
-            font-weight: 600;
-            margin-left: auto;
-            width: 5%;
-        }
-
-        .coming-soon {
-            text-align: center;
-            padding: 80px 20px;
-            font-size: 1.8rem;
-            color: var(--accent);
-            font-style: italic;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            .main-tab {
-                padding: 15px 30px;
-                font-size: 1.1rem;
-            }
-
-            .sub-tab {
-                padding: 10px 20px;
-                font-size: 1rem;
-            }
-
-            .menu-items.active {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+</style>
 </head>
 <body>
     <div class="container">
         <header>
             <img src="FBC_LOGO.png" alt="Forney Brewing Company" style="max-width: 500px; width: 100%; height: auto; margin-bottom: 20px;">
-            <p class="tagline">Crafted with passion, served with pride</p>
+            <!-- <p class="tagline">Crafted with passion, served with pride</p> -->
         </header>
 
         <div class="main-tabs">
@@ -317,7 +35,7 @@
                 <button class="sub-tab active" data-category="starters">Starters & Salads</button>
                 <button class="sub-tab" data-category="grill">Grill</button>
                 <button class="sub-tab" data-category="pizza">Artisan Pizza</button>
-                <button class="sub-tab" data-category="dessert">Dessert</button>
+                <button class="sub-tab" data-category="dessert">Dessert and Popcorn</button>
             </div>
         <!-- Starters -->
             <div class="menu-items active" id="starters">
@@ -330,7 +48,7 @@
                         <div class="item-name">Wings</div>
                         <div class="item-price">$12</div>
                     </div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Choice of sweet & spicy buffalo, lemon pepper lager, house made bbq or Thai sweet chili</div>
+                    <div class="menu-item-description">Choice of sweet & spicy buffalo, lemon pepper lager, house made bbq or Thai sweet chili</div>
                     
                 </div>
                 <div class="menu-item">
@@ -338,21 +56,21 @@
                         <div class="item-name">Large Bavarian Pretzel</div>
                         <div class="item-price">$14</div>
                     </div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Large soft Bavarian pretzel, dijon mustard, house made beer cheese</div>
+                    <div class="menu-item-description">Large soft Bavarian pretzel, dijon mustard, house made beer cheese</div>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-title-price">
                         <div class="item-name">Nachos</div>
                         <div class="item-price">$15</div>
                     </div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Spiced ground beef, house made tortilla chips, queso, sweet pico, cilantro sourcream, candied jalapenos</div>
+                    <div class="menu-item-description">Spiced ground beef, house made tortilla chips, queso, sweet pico, cilantro sourcream, candied jalapenos</div>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-title-price">
                         <div class="item-name">Deviled Eggs</div>
                         <div class="item-price">$11</div>
                     </div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Stout glazed bacon, candied jalapeno, chives</div>
+                    <div class="menu-item-description">Stout glazed bacon, candied jalapeno, chives</div>
                 </div>
                 </div>
                 </div>
@@ -365,21 +83,21 @@
                         <div class="item-name">House Salad</div>
                         <div class="item-price">$12</div>
                     </div>    
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Chopped romaine leaf lettuce, cherry tomatoes, parmesan cheese, garlic knot croutons house ranch dressing</div>
+                    <div class="menu-item-description">Chopped romaine leaf lettuce, cherry tomatoes, parmesan cheese, garlic knot croutons house ranch dressing</div>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-title-price">
                         <div class="item-name">Fall Harvest Salad</div>
                         <div class="item-price">$14</div>
                     </div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Chopped romaine leaf lettuce, cherry tomatoes, parmesan cheese, garlic knot croutons house ranch dressing</div>
+                    <div class="menu-item-description">Chopped romaine leaf lettuce, cherry tomatoes, parmesan cheese, garlic knot croutons house ranch dressing</div>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-title-price">
                         <div class="item-name">Wedge Salad</div>
                         <div class="item-price">$12</div>
                     </div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Iceburg lettuce, blue cheese, everything bagel seasoning, cherry tomato, bacon, dill</div>
+                    <div class="menu-item-description">Iceburg lettuce, blue cheese, everything bagel seasoning, cherry tomato, bacon, dill</div>
                 </div>
                     </div>
                 </div>
@@ -387,68 +105,86 @@
         <!-- GRILL -->
             <div class="menu-items" id="grill">
                 <div style="grid-column: 1 / -1; margin-bottom: 20px;">
+        <!-- Burgers and Sandwiches -->
                     <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--secondary); margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid var(--secondary);">Burgers and Sandwiches</h2>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;"> 
                 <div class="menu-item">
-                    <div class="item-name">Classic Smash Burger</div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Smash patty, American cheese, burger sauce, lettuce, tomato, red onions, pickles, garlic butter bun and fries</div>
-                    <div class="item-price">$15</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Classic Smash Burger</div>
+                        <div class="item-price">$15</div>
+                    </div>
+                    <div class="menu-item-description">Smash patty, American cheese, burger sauce, lettuce, tomato, red onions, pickles, garlic butter bun and fries</div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Brew Smash Burger</div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Smash patty, cheddar, ale bacon onion jam, garlic butter bun and fries</div>
-                    <div class="item-price">$16</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Brew Smash Burger</div>
+                        <div class="item-price">$16</div>
+                    </div>
+                    <div class="menu-item-description">Smash patty, cheddar, ale bacon onion jam, garlic butter bun and fries</div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Boat to Miami (Cuban)</div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Smoked mojo pork shoulder, ham, swiss, dijon, pickles, grilled hoagie roll, fries</div>
-                    <div class="item-price">$16</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Boat to Miami (Cuban)</div>
+                        <div class="item-price">$16</div>
+                    </div>
+                    <div class="menu-item-description">Smoked mojo pork shoulder, ham, swiss, dijon, pickles, grilled hoagie roll, fries</div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Italian Beef</div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Slow roasted beef, mayo, giardiniera, au jus, hoagie roll, fries</div>
-                    <div class="item-price">$18</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Italian Beef</div>
+                        <div class="item-price">$18</div>
+                    </div>
+                    <div class="menu-item-description">Slow roasted beef, mayo, giardiniera, au jus, hoagie roll, fries</div>
                 </div>
             </div>
             </div>
-
-                
+        <!-- Chicken -->
                 <div style="grid-column: 1 / -1; margin-bottom: 20px;">
                     <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--secondary); margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid var(--secondary);">Chicken</h2>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">                
                 
                 
                 <div class="menu-item">
-                    <div class="item-name">Jo. Will Eat Chicken Sandwich</div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">(2) sweet heat buttermilk fried chicken breasts, house ranch, bacon, pickles, garlic butter bun and fries</div>
-                    <div class="item-price">$20</div>
+                    <div class="menu-item-title-price"> 
+                        <div class="item-name">Jo. Will Eat Chicken Sandwich</div>
+                        <div class="item-price">$20</div>
+                    </div>
+                    <div class="menu-item-description">Two sweet heat buttermilk fried chicken breasts, house ranch, bacon, pickles, garlic butter bun and fries</div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Crispy Chicken Sandwich 
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Buttermilk fried chicken, house ranch, pickles, garlic butter bun and fries
-                    </br><span style="font-size: 0.9rem; color: #d32f2f; font-weight: 400; margin-left: 18px;">Make it Forney Hot</span>
-                    </div>
-                    </div>
-                    <div class="item-price">$15</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Crispy Chicken Sandwich </div>
+                        <div class="item-price">$15</div>
+                    </div>                    
+                    <div class="menu-item-description">Buttermilk fried chicken, house ranch, pickles, garlic butter bun and fries</div>
+                    <div class="menu-item-description" style="color: #d32f2f;">Make it Forney Hot</div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Tossed Chicken Tenders</div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Choice of sweet & spicy buffalo, lemon pepper lager, house made bbq or Thai sweet chili</div>
-                    <div class="item-price">$15</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Tossed Chicken Tenders</div>
+                        <div class="item-price">$15</div>
+                    </div>
+                    <div class="menu-item-description">Choice of sweet & spicy buffalo, lemon pepper lager, house made bbq or Thai sweet chili</div>
                 </div>
                     </div>
                 </div>
+        <!-- Kids Menu -->
                 <div style="grid-column: 1 / -1; margin-bottom: 20px;">
                     <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--secondary); margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid var(--secondary);">Kids</h2>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
                 <div class="menu-item">
-                    <div class="item-name">Child Burger</div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Smash patty, American cheese, pickles, and fries</div>
-                    <div class="item-price">$10</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Child Burger</div>
+                        <div class="item-price">$10</div>
+                    </div>
+                    <div class="menu-item-description">Smash patty, American cheese, pickles, and fries</div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Child Chicken Tenders</div>
-                    <div class="item-price">$10</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Child Chicken Tenders</div>
+                        <div class="item-price">$10</div>
+                    </div>
+                    <div class="menu-item-description">Three Fried Chicken Tenders and Fries</div>
                 </div>
                     </div>
                 </div>    
@@ -456,41 +192,56 @@
         <!-- PIZZA SECTION -->
             <div class="menu-items" id="pizza">
                 <div class="menu-item">
-                    <div class="item-name">Margherita</div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Fresh mozzarella, basil, and tomato sauce</div>
-                    <div class="item-price">$15</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Margherita</div>
+                        <div class="item-price">$15</div>
+                    </div>
+                    <div class="menu-item-description">Fresh mozzarella, basil, and tomato sauce</div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Cheese</div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Crushed san marzanno tomato, mozzarella</div>
-                    <div class="item-price">$15</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Cheese</div>
+                        <div class="item-price">$15</div>
+                    </div>
+                    <div class="menu-item-description">Crushed san marzanno tomato, mozzarella</div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Pepperoni</div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Crushed san marzano tomato, pepperoni, mozzarella</div>
-                    <div class="item-price">$16</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Pepperoni</div>
+                        <div class="item-price">$16</div>
+                    </div>
+                    <div class="menu-item-description">Crushed san marzano tomato, pepperoni, mozzarella</div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Chicken Pesto</div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">House made alfredo sauce, mozzarella, grilled chicken, red onion, texas pecan pesto</div>
-                    <div class="item-price">$17</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Chicken Pesto</div>
+                        <div class="item-price">$17</div>
+                    </div>
+                    <div class="menu-item-description">House made alfredo sauce, mozzarella, grilled chicken, red onion, texas pecan pesto</div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Forney Hot</div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Crushed san marzanno tomato, crisp chicken, pickles, mozzarella, "Forney Hot" sauce</div>
-                    <div class="item-price">$17</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Forney Hot</div>
+                        <div class="item-price">$17</div>
+                    </div>
+                    <div class="menu-item-description">Crushed san marzanno tomato, crisp chicken, pickles, mozzarella, "Forney Hot" sauce</div>
                 </div>
             </div>
+        <!-- DESSERT SECTION -->
             <div class="menu-items" id="dessert">
                 <div class="menu-item">
-                    <div class="item-name">Sticky Toffee Pudding</div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Succulent date cake soaked with a stout toffee sauce topped with vanilla ice cream and candied pecans</div>
-                    <div class="item-price">$13</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Sticky Toffee Pudding</div>
+                        <div class="item-price">$13</div>
+                    </div>
+                    <div class="menu-item-description">Succulent date cake soaked with a stout toffee sauce topped with vanilla ice cream and candied pecans</div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Dark Chocolate Chunk Brownie</div>
-                    <div style="font-size: 1rem; color: var(--accent); margin: 8px 0; font-style: italic;">Rich dark chocolate brownie, topped with toffee sauce and vanilla ice cream</div>
-                    <div class="item-price">$13</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Dark Chocolate Chunk Brownie</div>
+                        <div class="item-price">$13</div>
+                    </div>
+                    <div class="menu-item-description">Rich dark chocolate brownie, topped with toffee sauce and vanilla ice cream</div>
                 </div>
             </div>
         </div>
@@ -501,7 +252,7 @@
                 <button class="sub-tab active" data-category="beers">Beers</button>
                 <button class="sub-tab" data-category="cocktails">Cocktails</button>
                 <button class="sub-tab" data-category="wine">Wine</button>
-                <button class="sub-tab" data-category="soft-drinks">Soft Drinks</button>
+                <button class="sub-tab" data-category="soft-drinks">NA Drinks</button>
             </div>
 
             <div class="menu-items active" id="beers">
@@ -510,82 +261,83 @@
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
                         
                         <div  class="menu-item">
-                            <div class="item-name">American Light Lager</div>
-                            <div class="menu-item-beer-description">
-                                <div class="item-description-beer">4.6% ABV | 3.5 IBU</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">American Light Lager</div>
                                 <div class="item-price">$6</div>
                             </div>
-                        </div>
-
-                        
+                            <div class="item-description-beer">4.6% ABV | 3.5 IBU</div>
+                            </div>                        
                         <div class="menu-item">
-                            <div class="item-name">Hefeweizen</div>
-                            <div class="menu-item-beer-description">
-                                <div class="item-description-beer">4.6% ABV | 9 IBU</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">Hefeweizen</div>
                                 <div class="item-price">$6</div>
                             </div>
+                            <div class="item-description-beer">4.6% ABV | 9 IBU</div>
                         </div>
                         <div class="menu-item">
-                            <div class="item-name">Mexican Lager</div>
-                            <div class="menu-item-beer-description">
-                                <div class="item-description-beer">5% ABV | 3.5 IBU</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">Mexican Lager</div>
                                 <div class="item-price">$6</div>
                             </div>
+                            <div class="item-description-beer">5% ABV | 3.5 IBU</div>
                         </div>
                         <div class="menu-item">                            
-                            <div class="item-name">Amber Lager</div>
-                            <div class="menu-item-beer-description">
-                                <div class="item-description-beer">5.9% ABV | 19 IBU</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">Amber Lager</div>
                                 <div class="item-price">$6</div>
                             </div>
+                            <div class="item-description-beer">5.9% ABV | 19 IBU</div>
                         </div>
-                        <div class="menu-item"> 
-                            <div class="item-name">Hoppy Brown Ale</div>
-                            <div class="menu-item-beer-description">
-                                <div class="item-description-beer">5.7% ABV | 30 IBU</div>
+                        <div class="menu-item">
+                             <div class="menu-item-title-price">
+                                <div class="item-name">Hoppy Brown Ale</div>
                                 <div class="item-price">$6</div>
                             </div>
+                            <div class="item-description-beer">5.7% ABV | 30 IBU</div>
                         </div>
                         <div class="menu-item">
-                            <div class="item-name">Oktoberfest</div>
-                            <div class="menu-item-beer-description">
-                                <div class="item-description-beer">5.6% ABV | 2.2 IBU</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">Oktoberfest</div>
                                 <div class="item-price">$7</div>
                             </div>
+                            <div class="item-description-beer">5.6% ABV | 2.2 IBU</div>
                         </div>
                         <div class="menu-item">
-                            <div class="item-name">Stout</div>
-                            <div class="menu-item-beer-description">
-                                <div class="item-description-beer">7.2% ABV | 3.7 IBU</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">Stout</div>
                                 <div class="item-price">$7</div>
                             </div>
+                            <div class="item-description-beer">7.2% ABV | 3.7 IBU</div>
                         </div>
                         <div class="menu-item">
-                            <div class="item-name">Czech Pilsner</div>
-                            <div class="menu-item-beer-description">
-                                <div class="item-description-beer">5% ABV | 12 IBU</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">Czech Pilsner</div>
                                 <div class="item-price">$7</div>
                             </div>
+                            <div class="item-description-beer">5% ABV | 12 IBU</div>
                         </div>
                         <div class="menu-item">
-                            <div class="item-name">Hazy IPA</div>
-                            <div class="menu-item-beer-description">
-                                <div class="item-description-beer">6.8% ABV | 25 IBU</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">Hazy IPA</div>
                                 <div class="item-price">$9</div>
                             </div>
+                            <div class="item-description-beer">6.8% ABV | 25 IBU</div>
                         </div>
                         <div class="menu-item">
-                            <div class="item-name">Juicy IPA</div>
-                            <div class="menu-item-beer-description">
-                                <div class="item-description-beer">5.6% ABV | 10 IBU</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">Juicy IPA</div>
                                 <div class="item-price">$9</div>
                             </div>
+                            <div class="item-description-beer">5.6% ABV | 10 IBU</div>
                         </div>
                         <div class="menu-item">
-                            <div class="item-name">Flight</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">Flight</div>
+                                <div class="item-price">$11</div>
+                            </div>
                             <div class="menu-item-beer-description">
                                 <div class="item-description-beer">Pick Any 4 Beers on Tap</div>
-                                <div class="item-price">$11</div>
+                                
                             </div>
                         </div>
                     </div>
@@ -597,48 +349,75 @@
                     <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--accent); margin: 30px 0 20px 0; font-weight: 600;">Manhattan Project</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 30px;">
                         <div class="menu-item">
-                            <div class="item-name">Plutonium-239</div>
-                            <div class="item-price">$6</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">Plutonium-239</div>
+                                <div class="item-price">$6</div>
+                            </div>
+                            <div class="item-description-beer">6.2% ABV | 25 IBU</div>
                         </div>
                         <div class="menu-item">
-                            <div class="item-name">Hoppenheimer</div>
-                            <div class="item-price">$7</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">Hoppenheimer</div>
+                                <div class="item-price">$7</div>
+                            </div>
+                            <div class="item-description-beer">7.4 ABV | 68 IBU</div>
                         </div>
                         <div class="menu-item">
-                            <div class="item-name">Bikini Atoll</div>
-                            <div class="item-price">$7</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">Bikini Atoll</div>
+                                <div class="item-price">$7</div>
+                            </div>
+                            <div class="item-description-beer">5.3% ABV | 6 IBU</div>
                         </div>
                         <div class="menu-item">
-                            <div class="item-name">Peace Keeper</div>
-                            <div class="item-price">$7</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">Peace Keeper</div>
+                                <div class="item-price">$7</div>
+                            </div>
+                            <div class="item-description-beer">5.2% ABV | NA IBU</div>
                         </div>
                         <div class="menu-item">
-                            <div class="item-name">Wise Monkeys</div>
-                            <div class="item-price">$9</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">Wise Monkeys</div>
+                                <div class="item-price">$9</div>
+                            </div>
+                            <div class="item-description-beer">10% ABV | 30 IBU</div>
                         </div>
                         <div class="menu-item">
-                            <div class="item-name">Double Half-Life</div>
-                            <div class="item-price">$9</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">Double Half-Life</div>
+                                <div class="item-price">$9</div>
+                            </div>
+                            <div class="item-description-beer">8% ABV | 50 IBU</div>
                         </div>
                     </div>
 
                     <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--accent); margin: 30px 0 20px 0; font-weight: 600;">Armor Brewing</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 30px;">
                         <div class="menu-item">
-                            <div class="item-name">Blood Orange Gose</div>
-                            <div class="item-price">$6</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">Blood Orange Gose</div>
+                                <div class="item-price">$6</div>
+                            </div>
+                            <div class="item-description-beer">4.6% ABV</div>
                         </div>
                     </div>
 
                     <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--accent); margin: 30px 0 20px 0; font-weight: 600;">Canned Ciders</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
                         <div class="menu-item">
-                            <div class="item-name">Austin Eastciders</div>
-                            <div class="item-price">$5</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">Austin Eastciders</div>
+                                <div class="item-price">$5</div>
+                            </div>
+                            <div class="item-description-beer">5% ABV</div>
                         </div>
                         <div class="menu-item">
-                            <div class="item-name">Austin Eastciders Blood Orange</div>
-                            <div class="item-price">$6</div>
+                            <div class="menu-item-title-price">
+                                <div class="item-name">Austin Eastciders Blood Orange</div>
+                                <div class="item-price">$6</div>
+                            </div>
+                            <div class="item-description-beer">5% ABV</div>
                         </div>
                     </div>
                 </div>
@@ -646,62 +425,148 @@
 
             <div class="menu-items" id="cocktails">
                 <div class="menu-item">
-                    <div class="item-name">Margarita</div>
-                    <div class="item-price">$10</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Margarita</div>
+                        <div class="item-price">$10</div>
+                    </div>
+                    <div class="menu-item-description">Tangy lime and smooth tequila served over ice with a classic salt or Tajín rim.</div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">House Margarita</div>
-                    <div class="item-price">$15</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">House Margarita</div>
+                        <div class="item-price">$15</div>
+                    </div>
+                    <div class="menu-item-description">Our signature house blend; tart, refreshing, and perfectly balanced.</div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Old Fashioned</div>
-                    <div class="item-price">$12</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Old Fashioned</div>
+                        <div class="item-price">$12</div>
+                    </div>
+                    <div class="menu-item-description">A timeless classic with Redwood Empire bourbon, bitters, sugar, and a twist of citrus.</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-addon">Angels Envy</div>
+                        <!-- NEEDS REVIEW -->
+                        <div class="item-addon-price">$17</div>
+                    </div>                         
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Smoked Old Fashioned</div>
-                    <div class="item-price">$15</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Smoked Old Fashioned</div>
+                        <div class="item-price">$15</div>
+                    </div>
+                    <div class="menu-item-description">Redwood Empire Whiskey infused with a hint of oak smoke. Bold, wood-forward, and exceptionally smooth.</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-addon">Angels Envy</div>
+                        <!-- NEEDS REVIEW -->
+                        <div class="item-addon-price">$20</div>
+                    </div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Tequila Sunrise</div>
-                    <div class="item-price">$15</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Tequila Sunrise</div>
+                        <div class="item-price">$15</div>
+                    </div>
+                    <div class="menu-item-description">A vibrant blend of tequila, orange juice, and grenadine, garnished with an orange slice.</div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Vodka Mojito</div>
-                    <div class="item-price">$15</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Vodka Mojito</div>
+                        <div class="item-price">$15</div>
+                    </div>
+                    <div class="menu-item-description">A refreshing mix of vodka, fresh mint, lime juice, simple syrup, and club soda.</div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Vodka Peach Tea</div>
-                    <div class="item-price">$15</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Vodka Peach Tea</div>
+                        <div class="item-price">$15</div>
+                    </div>
+                    <div class="menu-item-description">A southern-inspired cocktail with vodka, peach schnapps, iced tea, and a hint of lemon.</div>
                 </div>
             </div>
 
             <div class="menu-items" id="wine">
-                <div style="grid-column: 1 / -1; text-align: center; margin-bottom: 30px;">
-                    <p style="font-size: 1.4rem; color: var(--accent); font-style: italic;">All wines $12</p>
+                <div class="menu-item">
+                    <div class="menu-item-title-price">
+                        <div class="item-name">14 Hands Chardonnay</div>
+                        <div class="item-price">$12</div>
+                    </div>
+                    <div class="menu-item-description">Light-bodied, Washington State white wine featuring bright aromas of melon, apple, and pear with subtle floral notes</div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Chardonnay</div>
-                    <div class="item-price">$12</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Oyster Bay Sauvignon Blanc</div>
+                        <div class="item-price">$12</div>
+                    </div>
+                    <div class="menu-item-description">World-renowned, cool-climate New Zealand white wine, celebrated for its vibrant, zesty, and aromatic profile</div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Sauvignon Blanc</div>
-                    <div class="item-price">$12</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Bread & Butter Cabernet Sauvignon</div>
+                        <div class="item-price">$12</div>
+                    </div>
+                    <div class="menu-item-description">Rich and velvety California red wine, known for its luscious dark fruit flavors and smooth tannins</div>
                 </div>
                 <div class="menu-item">
-                    <div class="item-name">Cabernet</div>
-                    <div class="item-price">$12</div>
-                </div>
-                <div class="menu-item">
-                    <div class="item-name">Pinot</div>
-                    <div class="item-price">$12</div>
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Murphy-Goode Pinot Noir</div>
+                        <div class="item-price">$12</div>
+                    </div>
+                    <div class="menu-item-description">Elegant and medium-bodied California red wine, celebrated for its bright cherry flavors and silky texture</div>
                 </div>
             </div>
 
             <div class="menu-items" id="soft-drinks">
-                <div style="grid-column: 1 / -1;">
-                    <div class="menu-item" style="text-align: center;">
-                        <div class="item-name">Coke </br> Diet Coke </br> Dr Pepper </br> Dr Pepper Zero </br> Sprite </br> Sweet Tea </br> Unsweetened Iced Tea</div>
-                        <div class="item-price">$3</div>
+
+            <div style="grid-column: 1 / -1; margin-bottom: 20px;">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--secondary); margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid var(--secondary);">Soft Drink Cans - $3</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
+                <div class="menu-item">
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Coke</div>
+                        <!-- <div class="item-price">$3</div> -->
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Diet Coke</div>
+                        <!-- <div class="item-price">$3</div> -->
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Dr. Pepper</div>
+                        <!-- <div class="item-price">$3</div> -->
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Dr. Pepper Zero</div>
+                        <!-- <div class="item-price">$3</div> -->
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Sprite</div>
+                        <!-- <div class="item-price">$3</div> -->
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div style="grid-column: 1 / -1; margin-bottom: 20px;">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--secondary); margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid var(--secondary);">Tea - $3 (Free refills)</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
+                <div class="menu-item">
+                    <div class="menu-item-title-price">
+                        <div class="item-name">Sweet Tea</div>
+                        <!-- <div class="item-price">$3</div> -->
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-title-price">
+                        <div class="item-name">UnSweet Tea</div>
+                        <!-- <div class="item-price">$3</div> -->
                     </div>
                 </div>
             </div>
